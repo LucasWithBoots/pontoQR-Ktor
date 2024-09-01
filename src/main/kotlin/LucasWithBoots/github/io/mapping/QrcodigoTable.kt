@@ -26,6 +26,7 @@ class QrcodigoDAO(id: EntityID<Int>) : IntEntity(id) {
 }
 
 fun daoToModel(dao: QrcodigoDAO) = Qrcodigo(
+    dao.id.value,
     dao.id_usuariocriador,
     dao.titulo,
     dao.descricao,

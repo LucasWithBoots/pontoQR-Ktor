@@ -8,9 +8,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Qrcodigo(
+    val id: Int? = null,
     val id_usuariocriador: Int,
     val titulo: String,
     val descricao: String,
     val data_criacao: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
-    val ativo: Boolean
+    var ativo: Boolean = true
 )

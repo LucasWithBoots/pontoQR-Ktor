@@ -24,6 +24,7 @@ class UsuarioDAO(id: EntityID<Int>) : IntEntity(id) {
 }
 
 fun daoToModel(dao: UsuarioDAO) = Usuario(
+    dao.id.value,
     dao.nome,
     dao.email,
     dao.ehcriador,

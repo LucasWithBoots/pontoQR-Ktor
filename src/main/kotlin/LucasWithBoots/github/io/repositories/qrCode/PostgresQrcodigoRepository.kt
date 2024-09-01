@@ -27,6 +27,20 @@ class PostgresQrcodigoRepository : QrcodigoRepository {
         }
     }
 
+    override suspend fun ativarQrcodigo(id: Int): Unit = suspendTransaction {
+        val qrCodigo = QrcodigoDAO.findById(id)
+
+        if (qrCodigo != null) {
+            if (qrCodigo.ativo == true) {
+                throw Exception("QR Code já está ativo")
+            }
+        }
+
+        QrcodigoDAO.findByIdAndUpdate(id) {
+            it.ativo = true
+        }
+    }
+
     override suspend fun removeQrcodigo(id: Int): Boolean = suspendTransaction {
         val rowsDeleted = QrcodigoTable.deleteWhere {
             QrcodigoTable.id eq id

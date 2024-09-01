@@ -1,5 +1,6 @@
 package LucasWithBoots.github.io.plugins
 
+import LucasWithBoots.github.io.model.Qrcodigo
 import LucasWithBoots.github.io.model.Usuario
 import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
 import LucasWithBoots.github.io.repositories.qrCode.PostgresQrcodigoRepository
@@ -66,14 +67,60 @@ fun Application.configureSerialization(
             }
         }
 
-        route("/qrcode") {
+        route("/qrcodigo") {
             get {
                 val qrcodes = qrcodigoRepository.allQrcodigo()
                 call.respond(qrcodes)
             }
 
-            get {
+            get("/{id}") {
+                val id = call.parameters["id"]
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Missing id")
+                    return@get
+                }
+                val qrcode = qrcodigoRepository.qrcodigoById(id.toInt())
+                if (qrcode == null) {
+                    call.respond(HttpStatusCode.NotFound)
+                    return@get
+                }
+                call.respond(qrcode)
+            }
 
+            post {
+                try {
+                    val qrcode = call.receive<Qrcodigo>()
+                    qrcodigoRepository.addQrcodigo(qrcode)
+                    call.respond(HttpStatusCode.Created)
+                } catch (ex: IllegalStateException) {
+                    call.respond(HttpStatusCode.BadRequest)
+                } catch (ex: JsonConvertException) {
+                    call.respond(HttpStatusCode.BadRequest)
+                }
+            }
+
+            put("/ativar/{id}") {
+                val id = call.parameters["id"]
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@put
+                }
+
+                qrcodigoRepository.ativarQrcodigo(id.toInt())
+                call.respond(HttpStatusCode.OK)
+            }
+
+            delete("/{id}") {
+                val id = call.parameters["id"]
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@delete
+                }
+                if (qrcodigoRepository.removeQrcodigo(id.toInt())) {
+                    call.respond(HttpStatusCode.OK)
+                } else {
+                    call.respond(HttpStatusCode.NotFound)
+                }
             }
         }
     }

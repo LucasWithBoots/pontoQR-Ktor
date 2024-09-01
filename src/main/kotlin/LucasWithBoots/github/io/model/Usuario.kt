@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Usuario(
+    val id: Int? = null,
     val nome: String,
     val email: String,
     val ehcriador: Boolean,

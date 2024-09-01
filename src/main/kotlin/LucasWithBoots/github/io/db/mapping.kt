@@ -30,7 +30,6 @@ suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
     newSuspendedTransaction(Dispatchers.IO, statement = block)
 
 fun daoToModel(dao: UsuarioDAO) = Usuario(
-    dao.id.value,
     dao.nome,
     dao.email,
     dao.ehcriador,

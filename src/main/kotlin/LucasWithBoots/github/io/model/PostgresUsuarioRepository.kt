@@ -14,6 +14,10 @@ class PostgresUsuarioRepository : UsuarioRepository {
         UsuarioDAO.all().map(::daoToModel)
     }
 
+    override suspend fun usuarioById(id: Int): Usuario? = suspendTransaction {
+        UsuarioDAO.find { (UsuarioTable.id eq id) }.limit(1).map(::daoToModel).firstOrNull()
+    }
+
     override suspend fun addUsuario(usuario: Usuario): Unit = suspendTransaction {
         UsuarioDAO.new {
             nome = usuario.nome

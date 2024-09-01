@@ -1,5 +1,6 @@
 package LucasWithBoots.github.io.plugins
 
+import LucasWithBoots.github.io.mapping.QrcodigoTable
 import LucasWithBoots.github.io.mapping.UsuarioTable
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -20,6 +21,7 @@ fun Application.configureDatabases() {
 
     transaction {
         SchemaUtils.create(UsuarioTable)
+        SchemaUtils.create(QrcodigoTable)
     }
 }
 

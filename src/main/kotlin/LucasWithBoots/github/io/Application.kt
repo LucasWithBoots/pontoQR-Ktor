@@ -4,6 +4,7 @@ import LucasWithBoots.github.io.plugins.configureDatabases
 import LucasWithBoots.github.io.plugins.configureRouting
 import LucasWithBoots.github.io.plugins.configureSerialization
 import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
+import LucasWithBoots.github.io.repositories.qrCode.PostgresQrcodigoRepository
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -14,9 +15,7 @@ fun main() {
 }
 
 fun Application.module() {
-    val repository = PostgresUsuarioRepository()
-
-    configureSerialization(repository)
+    configureSerialization(PostgresUsuarioRepository(), PostgresQrcodigoRepository())
     configureDatabases()
     configureRouting()
 }

@@ -2,6 +2,7 @@ package LucasWithBoots.github.io.plugins
 
 import LucasWithBoots.github.io.model.Usuario
 import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
+import LucasWithBoots.github.io.repositories.qrCode.PostgresQrcodigoRepository
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.json.*
@@ -11,14 +12,17 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Application.configureSerialization(repository: PostgresUsuarioRepository) {
+fun Application.configureSerialization(
+    usuarioRepository: PostgresUsuarioRepository,
+    qrcodigoRepository: PostgresQrcodigoRepository
+) {
     install(ContentNegotiation) {
         json()
     }
     routing {
         route("/usuario") {
             get {
-                val usuarios = repository.allUsuarios()
+                val usuarios = usuarioRepository.allUsuarios()
                 call.respond(usuarios)
             }
 
@@ -28,7 +32,7 @@ fun Application.configureSerialization(repository: PostgresUsuarioRepository) {
                     call.respond(HttpStatusCode.BadRequest, "Missing id")
                     return@get
                 }
-                val usuario = repository.usuarioById(id.toInt())
+                val usuario = usuarioRepository.usuarioById(id.toInt())
                 if (usuario == null) {
                     call.respond(HttpStatusCode.NotFound)
                     return@get
@@ -39,7 +43,7 @@ fun Application.configureSerialization(repository: PostgresUsuarioRepository) {
             post {
                 try {
                     val usuario = call.receive<Usuario>()
-                    repository.addUsuario(usuario)
+                    usuarioRepository.addUsuario(usuario)
                     call.respond(HttpStatusCode.Created)
                 } catch (ex: IllegalStateException) {
                     call.respond(HttpStatusCode.BadRequest)
@@ -54,11 +58,22 @@ fun Application.configureSerialization(repository: PostgresUsuarioRepository) {
                     call.respond(HttpStatusCode.BadRequest)
                     return@delete
                 }
-                if (repository.removeUsuario(id.toInt())) {
+                if (usuarioRepository.removeUsuario(id.toInt())) {
                     call.respond(HttpStatusCode.OK)
                 } else {
                     call.respond(HttpStatusCode.NotFound)
                 }
+            }
+        }
+
+        route("/qrcode") {
+            get {
+                val qrcodes = qrcodigoRepository.allQrcodigo()
+                call.respond(qrcodes)
+            }
+
+            get {
+
             }
         }
     }

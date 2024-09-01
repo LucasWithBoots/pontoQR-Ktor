@@ -1,14 +1,11 @@
-package LucasWithBoots.github.io.db
+package LucasWithBoots.github.io.mapping
 
 import LucasWithBoots.github.io.model.Usuario
-import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.kotlin.datetime.date
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 object UsuarioTable : IntIdTable("usuario") {
     val nome = varchar("nome", 255)
@@ -25,9 +22,6 @@ class UsuarioDAO(id: EntityID<Int>) : IntEntity(id) {
     var ehcriador by UsuarioTable.ehcriador
     var data_criacao by UsuarioTable.data_criacao
 }
-
-suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
-    newSuspendedTransaction(Dispatchers.IO, statement = block)
 
 fun daoToModel(dao: UsuarioDAO) = Usuario(
     dao.nome,

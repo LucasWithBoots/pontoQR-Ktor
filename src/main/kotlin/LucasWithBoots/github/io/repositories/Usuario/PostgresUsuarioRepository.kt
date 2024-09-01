@@ -1,9 +1,10 @@
-package LucasWithBoots.github.io.model
+package LucasWithBoots.github.io.repositories.Usuario
 
-import LucasWithBoots.github.io.db.UsuarioDAO
-import LucasWithBoots.github.io.db.UsuarioTable
-import LucasWithBoots.github.io.db.daoToModel
-import LucasWithBoots.github.io.db.suspendTransaction
+import LucasWithBoots.github.io.mapping.UsuarioDAO
+import LucasWithBoots.github.io.mapping.UsuarioTable
+import LucasWithBoots.github.io.mapping.daoToModel
+import LucasWithBoots.github.io.mapping.suspendTransaction
+import LucasWithBoots.github.io.model.Usuario
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 

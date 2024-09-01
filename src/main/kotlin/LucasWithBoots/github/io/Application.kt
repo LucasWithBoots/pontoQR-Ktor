@@ -1,9 +1,9 @@
 package LucasWithBoots.github.io
 
-import LucasWithBoots.github.io.model.PostgresUsuarioRepository
 import LucasWithBoots.github.io.plugins.configureDatabases
 import LucasWithBoots.github.io.plugins.configureRouting
 import LucasWithBoots.github.io.plugins.configureSerialization
+import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*

@@ -1,4 +1,6 @@
-package LucasWithBoots.github.io.model
+package LucasWithBoots.github.io.repositories.Usuario
+
+import LucasWithBoots.github.io.model.Usuario
 
 interface UsuarioRepository {
     suspend fun allUsuarios(): List<Usuario>

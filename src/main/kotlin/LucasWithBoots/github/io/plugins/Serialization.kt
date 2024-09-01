@@ -1,7 +1,7 @@
 package LucasWithBoots.github.io.plugins
 
-import LucasWithBoots.github.io.model.PostgresUsuarioRepository
 import LucasWithBoots.github.io.model.Usuario
+import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.json.*

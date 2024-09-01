@@ -1,6 +1,9 @@
 package LucasWithBoots.github.io
 
-import LucasWithBoots.github.io.plugins.*
+import LucasWithBoots.github.io.model.PostgresUsuarioRepository
+import LucasWithBoots.github.io.plugins.configureDatabases
+import LucasWithBoots.github.io.plugins.configureRouting
+import LucasWithBoots.github.io.plugins.configureSerialization
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -11,7 +14,9 @@ fun main() {
 }
 
 fun Application.module() {
-    configureSerialization()
+    val repository = PostgresUsuarioRepository()
+
+    configureSerialization(repository)
     configureDatabases()
     configureRouting()
 }

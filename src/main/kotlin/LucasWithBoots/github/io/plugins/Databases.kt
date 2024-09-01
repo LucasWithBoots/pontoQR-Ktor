@@ -1,5 +1,6 @@
 package LucasWithBoots.github.io.plugins
 
+import LucasWithBoots.github.io.mapping.UsuarioTable
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -7,6 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.*
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.sql.*
 
 fun Application.configureDatabases() {
@@ -15,6 +17,10 @@ fun Application.configureDatabases() {
         user = "postgres",
         password = "senha"
     )
+
+    transaction {
+        SchemaUtils.create(UsuarioTable)
+    }
 }
 
 /**

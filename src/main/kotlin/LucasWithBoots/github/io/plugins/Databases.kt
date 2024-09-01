@@ -14,7 +14,7 @@ import java.sql.*
 
 fun Application.configureDatabases() {
     Database.connect(
-        "jdbc:postgresql://localhost:1111/pontoQR",
+        "jdbc:postgresql://localhost:5432/pontoQR",
         user = "postgres",
         password = "senha"
     )

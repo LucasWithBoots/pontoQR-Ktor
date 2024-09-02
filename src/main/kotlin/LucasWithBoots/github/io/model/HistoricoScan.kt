@@ -18,7 +18,7 @@ data class HistoricoScan(
 @Serializable
 data class HistoricoScanCompleto(
     val id: Int? = null,
-    val usuarios: Usuario,
-    val qrCode: Qrcodigo,
-    val data_scan: LocalDate
+    val usuario: Usuario?,
+    val qrCode: Qrcodigo?,
+    val data_scan: LocalDate?
 )

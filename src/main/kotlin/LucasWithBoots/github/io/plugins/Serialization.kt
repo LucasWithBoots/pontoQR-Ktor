@@ -131,6 +131,12 @@ fun Application.configureSerialization(
                 val historicoScan = postgresHistoricoScanRepository.allHistoricoScan()
                 call.respond(historicoScan)
             }
+
+            get("/completo/{id}"){
+                val id = call.parameters["id"]
+                val historicoCompleto = postgresHistoricoScanRepository.historicoScanByIdCompleto(id!!.toInt())
+                call.respond(historicoCompleto!!)
+            }
         }
     }
 }

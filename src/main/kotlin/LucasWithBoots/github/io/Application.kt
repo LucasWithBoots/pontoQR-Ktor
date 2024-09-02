@@ -16,7 +16,8 @@ fun main() {
 }
 
 fun Application.module() {
-    configureSerialization(PostgresUsuarioRepository(), PostgresQrcodigoRepository(),PostgresHistoricoScanRepository())
+    configureSerialization(PostgresUsuarioRepository(), PostgresQrcodigoRepository(),PostgresHistoricoScanRepository(
+        PostgresUsuarioRepository(), PostgresQrcodigoRepository()))
     configureDatabases()
     configureRouting()
 }

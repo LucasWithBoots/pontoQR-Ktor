@@ -1,4 +1,4 @@
-package LucasWithBoots.github.io.repositories.qrCode
+package LucasWithBoots.github.io.repositories.Qrcodigo
 
 import LucasWithBoots.github.io.model.Qrcodigo
 

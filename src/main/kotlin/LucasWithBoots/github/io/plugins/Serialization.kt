@@ -2,6 +2,7 @@ package LucasWithBoots.github.io.plugins
 
 import LucasWithBoots.github.io.model.Qrcodigo
 import LucasWithBoots.github.io.model.Usuario
+import LucasWithBoots.github.io.repositories.HistoricoScan.PostgresHistoricoScanRepository
 import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
 import LucasWithBoots.github.io.repositories.Qrcodigo.PostgresQrcodigoRepository
 import io.ktor.http.*
@@ -15,7 +16,8 @@ import io.ktor.server.routing.*
 
 fun Application.configureSerialization(
     usuarioRepository: PostgresUsuarioRepository,
-    qrcodigoRepository: PostgresQrcodigoRepository
+    qrcodigoRepository: PostgresQrcodigoRepository,
+    postgresHistoricoScanRepository: PostgresHistoricoScanRepository
 ) {
     install(ContentNegotiation) {
         json()
@@ -121,6 +123,13 @@ fun Application.configureSerialization(
                 } else {
                     call.respond(HttpStatusCode.NotFound)
                 }
+            }
+        }
+
+        route("/historico"){
+            get {
+                val historicoScan = postgresHistoricoScanRepository.allHistoricoScan()
+                call.respond(historicoScan)
             }
         }
     }

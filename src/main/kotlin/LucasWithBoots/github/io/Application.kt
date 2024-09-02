@@ -3,6 +3,7 @@ package LucasWithBoots.github.io
 import LucasWithBoots.github.io.plugins.configureDatabases
 import LucasWithBoots.github.io.plugins.configureRouting
 import LucasWithBoots.github.io.plugins.configureSerialization
+import LucasWithBoots.github.io.repositories.HistoricoScan.PostgresHistoricoScanRepository
 import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
 import LucasWithBoots.github.io.repositories.Qrcodigo.PostgresQrcodigoRepository
 import io.ktor.server.application.*
@@ -15,7 +16,7 @@ fun main() {
 }
 
 fun Application.module() {
-    configureSerialization(PostgresUsuarioRepository(), PostgresQrcodigoRepository())
+    configureSerialization(PostgresUsuarioRepository(), PostgresQrcodigoRepository(),PostgresHistoricoScanRepository())
     configureDatabases()
     configureRouting()
 }

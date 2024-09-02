@@ -7,17 +7,14 @@ import LucasWithBoots.github.io.repositories.HistoricoScan.PostgresHistoricoScan
 import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
 import LucasWithBoots.github.io.repositories.Qrcodigo.PostgresQrcodigoRepository
 import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
 
-fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
+fun main(args: Array<String>) {
+    io.ktor.server.netty.EngineMain.main(args)
 }
 
 fun Application.module() {
     configureSerialization(PostgresUsuarioRepository(), PostgresQrcodigoRepository(),PostgresHistoricoScanRepository(
         PostgresUsuarioRepository(), PostgresQrcodigoRepository()))
-    configureDatabases()
+    configureDatabases(environment.config)
     configureRouting()
 }

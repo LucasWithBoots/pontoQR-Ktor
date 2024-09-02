@@ -4,8 +4,8 @@ import LucasWithBoots.github.io.model.HistoricoScan
 import LucasWithBoots.github.io.model.Qrcodigo
 import LucasWithBoots.github.io.model.Usuario
 import LucasWithBoots.github.io.repositories.HistoricoScan.PostgresHistoricoScanRepository
-import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
 import LucasWithBoots.github.io.repositories.Qrcodigo.PostgresQrcodigoRepository
+import LucasWithBoots.github.io.repositories.Usuario.PostgresUsuarioRepository
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.json.*
@@ -25,6 +25,7 @@ fun Application.configureSerialization(
     }
     routing {
         route("/usuario") {
+
             get {
                 val usuarios = usuarioRepository.allUsuarios()
                 call.respond(usuarios)
@@ -127,13 +128,13 @@ fun Application.configureSerialization(
             }
         }
 
-        route("/historico"){
+        route("/historico") {
             get {
                 val historicoScan = postgresHistoricoScanRepository.allHistoricoScan()
                 call.respond(historicoScan)
             }
 
-            get("/completo/{id}"){
+            get("/completo/{id}") {
                 val id = call.parameters["id"]
                 val historicoCompleto = postgresHistoricoScanRepository.historicoScanByIdCompleto(id!!.toInt())
                 call.respond(historicoCompleto!!)

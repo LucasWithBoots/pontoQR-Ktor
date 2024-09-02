@@ -1,5 +1,6 @@
 package LucasWithBoots.github.io.plugins
 
+import LucasWithBoots.github.io.model.HistoricoScan
 import LucasWithBoots.github.io.model.Qrcodigo
 import LucasWithBoots.github.io.model.Usuario
 import LucasWithBoots.github.io.repositories.HistoricoScan.PostgresHistoricoScanRepository
@@ -136,6 +137,18 @@ fun Application.configureSerialization(
                 val id = call.parameters["id"]
                 val historicoCompleto = postgresHistoricoScanRepository.historicoScanByIdCompleto(id!!.toInt())
                 call.respond(historicoCompleto!!)
+            }
+
+            post {
+                try {
+                    val historico = call.receive<HistoricoScan>()
+                    postgresHistoricoScanRepository.addHistoricoScan(historico)
+                    call.respond(HttpStatusCode.Created)
+                } catch (ex: IllegalStateException) {
+                    call.respond(HttpStatusCode.BadRequest)
+                } catch (ex: JsonConvertException) {
+                    call.respond(HttpStatusCode.BadRequest)
+                }
             }
         }
     }

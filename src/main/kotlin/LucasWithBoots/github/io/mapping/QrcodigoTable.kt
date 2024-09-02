@@ -15,7 +15,7 @@ object QrcodigoTable : IntIdTable("qrcodigo") {
     val ativo = bool("ativo")
 }
 
-class QrcodigoDAO(id: EntityID<Int>) : IntEntity(id) {
+class QrcodigoDAO(id: EntityID<Int>) : IntEntity(id) { // DAO representa cada linha da tabela, enquanto QrcodigoTable é a tabela inteira
     companion object : IntEntityClass<QrcodigoDAO>(QrcodigoTable)
 
     var id_usuariocriador by QrcodigoTable.id_usuariocriador

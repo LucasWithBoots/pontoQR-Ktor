@@ -10,6 +10,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.date
 object UsuarioTable : IntIdTable("usuario") {
     val nome = varchar("nome", 255)
     val email = varchar("email", 255)
+    val senha = varchar("senha", 255)
     val ehcriador = bool("ehcriador")
     val data_criacao = date("data_criacao")
 }
@@ -19,6 +20,7 @@ class UsuarioDAO(id: EntityID<Int>) : IntEntity(id) {
 
     var nome by UsuarioTable.nome
     var email by UsuarioTable.email
+    var senha by UsuarioTable.senha
     var ehcriador by UsuarioTable.ehcriador
     var data_criacao by UsuarioTable.data_criacao
 }
@@ -27,6 +29,7 @@ fun daoToModel(dao: UsuarioDAO) = Usuario(
     dao.id.value,
     dao.nome,
     dao.email,
+    dao.senha,
     dao.ehcriador,
     dao.data_criacao
 )

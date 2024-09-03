@@ -24,6 +24,8 @@ import java.util.Date
 @Serializable
 data class User(val username: String)
 
+// Código copiado do site apenas para testar, não foi implementado, tudo pode mudar
+
 fun Application.configureSecurity(config: ApplicationConfig) {
 
     val secret = config.property("jwt.secret").getString()

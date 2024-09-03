@@ -5,6 +5,7 @@ import LucasWithBoots.github.io.mapping.UsuarioTable
 import LucasWithBoots.github.io.mapping.daoToModel
 import LucasWithBoots.github.io.mapping.suspendTransaction
 import LucasWithBoots.github.io.model.Usuario
+import at.favre.lib.crypto.bcrypt.BCrypt
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 
@@ -20,9 +21,13 @@ class PostgresUsuarioRepository : UsuarioRepository {
     }
 
     override suspend fun addUsuario(usuario: Usuario): Unit = suspendTransaction {
+
+        var senhaHash = BCrypt.withDefaults().hashToString(12, usuario.senha.toCharArray())
+
         UsuarioDAO.new {
             nome = usuario.nome
             email = usuario.email
+            senha = senhaHash
             ehcriador = usuario.ehcriador
             data_criacao = usuario.data_criacao
         }

@@ -11,6 +11,7 @@ data class Usuario(
     val id: Int? = null,
     val nome: String,
     val email: String,
+    val senha: String,
     val ehcriador: Boolean,
     val data_criacao: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
 )

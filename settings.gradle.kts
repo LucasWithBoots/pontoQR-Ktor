@@ -1,1 +1,1 @@
-rootProject.name = "pontoQR-Ktor"
+rootProject.name = "io.github.lucaswithboots.pontoqr"

@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.mapping.Teams
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.config.ApplicationConfig
@@ -9,6 +10,8 @@ import io.ktor.server.routing.*
 import java.sql.*
 import kotlinx.coroutines.*
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.transaction
+import javax.xml.validation.Schema
 
 fun Application.configureDatabases(config: ApplicationConfig) {
     val url = config.property("storage.jdbcURL").getString()
@@ -20,6 +23,10 @@ fun Application.configureDatabases(config: ApplicationConfig) {
         user = user,
         password = password
     )
+
+    transaction {
+        SchemaUtils.create(Teams)
+    }
 }
 
 /**

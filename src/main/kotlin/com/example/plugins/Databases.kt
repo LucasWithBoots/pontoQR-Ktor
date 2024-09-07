@@ -1,17 +1,20 @@
 package com.example.plugins
 
+import com.example.mapping.QrCodes
+import com.example.mapping.ScanHistories
 import com.example.mapping.Teams
+import com.example.mapping.Users
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.config.ApplicationConfig
+import io.ktor.server.config.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import java.sql.*
 import kotlinx.coroutines.*
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
-import javax.xml.validation.Schema
+import java.sql.*
 
 fun Application.configureDatabases(config: ApplicationConfig) {
     val url = config.property("storage.jdbcURL").getString()
@@ -26,8 +29,14 @@ fun Application.configureDatabases(config: ApplicationConfig) {
 
     transaction {
         SchemaUtils.create(Teams)
+        SchemaUtils.create(Users)
+        SchemaUtils.create(ScanHistories)
+        SchemaUtils.create(QrCodes)
     }
 }
+
+suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
+    newSuspendedTransaction(Dispatchers.IO, statement = block)
 
 /**
  * Makes a connection to a Postgres database.
